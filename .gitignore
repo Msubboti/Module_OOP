@@ -1,0 +1,8 @@
+# Ignore the compyle files
+*.pyc
+
+# Ignore project configuration files
+.idea
+
+# Ignore virtual environment files
+virtual_env
