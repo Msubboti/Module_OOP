@@ -53,7 +53,6 @@ class Player:
 
     @classmethod
     def print_scores(cls):
-        print("You are scored {} points.".format(cls.score))
         return cls.score
 
     def attack(self, enemy_obj):
@@ -65,10 +64,10 @@ class Player:
         if fight_result == 0:
             print("It's a draw!The enemy has been repelled your attack")
         elif fight_result == 1:
-            print("You attacked successfully!")
+            print("You attacked successfully!\nYou have got one extra point")
             enemy_obj.decrease_lives()
             Player.score += 1
-            print(Player.score)
+            ""
 
         elif fight_result == -1:
             print("You missed!")
@@ -88,14 +87,38 @@ class Player:
             print("He is missed")
         return fight_result
 
+
+class Score:
+    def __init__(self, time, name, score):
+        self.time = time
+        self.name = name
+        self.score = score
+
+    def __str__(self):
+        return "{}: {}".format(self.name, self.score)
+
+    def __repr__(self):
+        return self.__str__()
+
+    @staticmethod
+    def records(fp):
+        with open(fp, 'r') as records:
+            objects = list()
+            for line in records:
+                listing = line[:-1].split('\t')
+                record = Score(listing[0][:-1], listing[1], int(listing[2]))
+                objects.append(record)
+            f = open('scores.txt', 'w')
+            f.close()
+        return objects
+
     def write_result(self):
         with open(r'scores.txt', 'a') as output:
-            a = datetime.now()
-            a = strftime('%Y-%m-%d %H:%M:%S', datetime.timetuple(a))
-            string = '{},\t{}\t{}\n'.format(a, self.name, self.print_scores())
-            print(string)
+            string = "{},\t{}\t{}\n".format(self.time, self.name, self.score)
             output.write(string)
             output.close()
+
+
 
 
 
