@@ -1,7 +1,11 @@
+"""
+Console game "Warriors"
+"""
 from datetime import datetime
 from time import strftime
-from models import Enemy, Player, Score
 from exceptions import EnemyDown, GameOver
+from models import Enemy, Player, Score
+
 
 
 def play(main_hero):
@@ -28,7 +32,7 @@ def play(main_hero):
             main_hero.score += 5
             round_of_battle = 1
             opponent = Enemy(level)
-            print("You are scored {} points.".format(main_hero.print_scores()))
+            print("You are scored {} points.".format(main_hero.score))
         else:
             print("You need to get ready for defence.")
             print("Your lives:\t{} || Enemy lives:\t{}".format(main_hero.lives, opponent.lives))
@@ -37,16 +41,16 @@ def play(main_hero):
 
 
 if __name__ == '__main__':
-    name = input("Enter your name/account please:\t")
-    print('Hi, {}'.format(name))
-    subject = Player(name)
+    NAME = input("Enter your name/account please:\t")
+    print('Hi, {}'.format(NAME))
+    subject = Player(NAME)
     try:
         play(subject)
     except GameOver:
-        a = datetime.now()
-        a = strftime('%Y-%m-%d %H:%M:%S', datetime.timetuple(a))
-        current = Score(a, subject.name, subject.score)
-        GameOver.You_Lose(subject, current)
+        CURRENT_TIME = datetime.now()
+        CURRENT_TIME = strftime('%Y-%m-%d %H:%M:%S', datetime.timetuple(CURRENT_TIME))
+        current = Score(CURRENT_TIME, subject.name, subject.score)
+        GameOver.you_lose(subject, current)
     except KeyboardInterrupt:
         pass
     finally:
