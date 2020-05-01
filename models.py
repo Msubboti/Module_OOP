@@ -1,8 +1,7 @@
 from random import randint
-from datetime import datetime
-from time import strftime
 from exceptions import EnemyDown, GameOver
 import settings
+
 
 
 class Enemy:
@@ -12,8 +11,7 @@ class Enemy:
 
     @staticmethod
     def select_attack():
-        attack = randint(1,3)
-        return attack
+        return randint(1, 3)
 
     def decrease_lives(self):
         self.lives -= 1
@@ -67,13 +65,10 @@ class Player:
             print("You attacked successfully!\nYou have got one extra point")
             enemy_obj.decrease_lives()
             Player.score += 1
-            ""
-
         elif fight_result == -1:
             print("You missed!")
-        return fight_result
 
-    def defence(self, enemy_obj):
+    def defence(self, enemy_obj, round):
         your_hero = input('Select hero for defence: 1 - WIZARD, 2 - WARRIOR, 3 - ROGUE:')
         your_hero = int(your_hero)
         opponent = enemy_obj.select_attack()
@@ -81,11 +76,19 @@ class Player:
         fight_result = self.fight(opponent, your_hero)
         if fight_result == 0:
             print("It's a draw! Your hero is repelled the attack.")
+            print("Welcome to next round")
+            round += 1
         elif fight_result == 1:
             print("Your hero has been defeated.")
+            print("You have lost one lives")
+            self.decrease_lives()
+            print("Your lives:\t{} || Enemy lives:\t{}".format(self.lives, enemy_obj.lives))
+
         elif fight_result == -1:
             print("He is missed")
-        return fight_result
+            print("Welcome to next round")
+            round += 1
+        return round
 
 
 class Score:
