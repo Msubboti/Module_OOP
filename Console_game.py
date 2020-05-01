@@ -6,6 +6,11 @@ from exceptions import EnemyDown, GameOver
 
 
 def play(main_hero):
+    """
+
+    :param main_hero:
+    :return:
+    """
     start = input('Are you ready to start?Type start if YES\t')
     while start.lower() != "start":
         start = input('Type START for start the game, please')
@@ -20,10 +25,10 @@ def play(main_hero):
         except EnemyDown:
             print("Your enemy is dead.")
             level += 1
-            Player.score += 5
+            main_hero.score += 5
             round = 1
             opponent = Enemy(level)
-            print("You are scored {} points.".format(Player.print_scores()))
+            print("You are scored {} points.".format(main_hero.print_scores()))
         else:
             print("You need to get ready for defence.")
             print("Your lives:\t{} || Enemy lives:\t{}".format(main_hero.lives, opponent.lives))
@@ -45,5 +50,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     finally:
-        Player.score = 0
         print("Good bye!")

@@ -3,7 +3,6 @@ from exceptions import EnemyDown, GameOver
 import settings
 
 
-
 class Enemy:
     def __init__(self, level):
         self.level = level
@@ -22,10 +21,10 @@ class Enemy:
 
 
 class Player:
-    score = 0
     def __init__(self, name):
         self.name = name
         self.lives = settings.LIVES
+        self.score = 0
 
     @staticmethod
     def fight(attack, defense):
@@ -49,9 +48,8 @@ class Player:
         else:
             pass
 
-    @classmethod
-    def print_scores(cls):
-        return cls.score
+    def print_scores(self):
+        return self.score
 
     def attack(self, enemy_obj):
         your_hero = input('Select ATTACK to Use: 1 - WIZARD, 2 - WARRIOR, 3 - ROGUE:')
@@ -63,8 +61,11 @@ class Player:
             print("It's a draw!The enemy has been repelled your attack")
         elif fight_result == 1:
             print("You attacked successfully!\nYou have got one extra point")
+            print('Your score is {}'.format(self.score))
+            self.score += 1
+            print('Your score is {}'.format(self.score))
             enemy_obj.decrease_lives()
-            Player.score += 1
+
         elif fight_result == -1:
             print("You missed!")
 
